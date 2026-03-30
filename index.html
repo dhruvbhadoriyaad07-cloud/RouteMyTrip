@@ -35,12 +35,13 @@
     </script>
     
     <style>
-        /* Custom Dynamic Cursor */
-        body { cursor: none; background-color: #FDF2F8; color: #3F2E3E; overflow-x: hidden; }
-        .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; }
-        .cursor-dot { width: 6px; height: 6px; background-color: #3F2E3E; }
-        .cursor-outline { width: 36px; height: 36px; border: 1.5px solid rgba(244, 151, 169, 0.8); transition: width 0.2s, height 0.2s, background-color 0.2s; }
-
+        /* --- Base Styles --- */
+        html, body {
+            background-color: #FDF2F8; 
+            color: #3F2E3E; 
+            overflow-x: hidden; 
+        }
+        
         /* Navigation & Animations */
         .glass-nav { background: rgba(253, 242, 248, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(63, 46, 62, 0.05); }
         .reveal-up, .reveal-left, .reveal-right { visibility: hidden; }
@@ -76,9 +77,6 @@
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-brandAccent selection:text-white">
-
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-outline" id="cursor-outline"></div>
 
     <div id="main-homepage" class="overflow-x-hidden w-full relative max-w-[100vw]">
         
@@ -191,24 +189,13 @@
                             <h1 class="font-serif text-brandText mb-2">Solang Valley-Kullu-Kasol-Manikaran</h1>
                             <p class="text-xs text-brandText/60 mb-4 tracking-widest uppercase font-medium">4 Nights / 5 Days</p>
                             <div class="flex flex-wrap gap-2 mt-3 mb-4">
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-hotel text-brandAccent"></i> Hotel
-                                </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-utensils text-brandAccent"></i> Meals
-                                </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-taxi text-brandAccent"></i> Taxi
-                                </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-camera text-brandAccent"></i> Sightseeing
-                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-hotel text-brandAccent"></i> Hotel</div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-utensils text-brandAccent"></i> Meals</div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-taxi text-brandAccent"></i> Taxi</div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-camera text-brandAccent"></i> Sightseeing</div>
                             </div>
                             <div class="flex justify-between items-end border-t border-brandText/10 pt-4">
-                                <div>
-                                    <p class="text-[10px] text-brandText/50 uppercase tracking-widest mb-1">From</p>
-                                    <p class="text-2xl font-bold text-brandText">₹5,999</p>
-                                </div>
+                                <div><p class="text-[10px] text-brandText/50 uppercase tracking-widest mb-1">From</p><p class="text-2xl font-bold text-brandText">₹5,999</p></div>
                                 <button onclick="openModal('Special Manali')" class="border border-brandText/20 text-brandText w-10 h-10 rounded-full flex items-center justify-center hover:bg-brandText hover:text-white transition-colors"><i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
@@ -224,24 +211,13 @@
                             <h1 class="font-serif text-brandText mb-2">South Goa</h1>
                             <p class="text-xs text-brandText/60 mb-4 tracking-widest uppercase font-medium">3 Nights / 4 Days</p>
                             <div class="flex flex-wrap gap-2 mt-3 mb-4">
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-hotel text-brandAccent"></i> Hotel
-                                </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-utensils text-brandAccent"></i> Meals
-                                </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-taxi text-brandAccent"></i> Taxi
-                                </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-camera text-brandAccent"></i> Sightseeing
-                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-hotel text-brandAccent"></i> Hotel</div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-utensils text-brandAccent"></i> Meals</div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-taxi text-brandAccent"></i> Taxi</div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-camera text-brandAccent"></i> Sightseeing</div>
                             </div>
                             <div class="flex justify-between items-end border-t border-brandText/10 pt-4">
-                                <div>
-                                    <p class="text-[10px] text-brandText/50 uppercase tracking-widest mb-1">From</p>
-                                    <p class="text-2xl font-bold text-brandText">₹6,999</p>
-                                </div>
+                                <div><p class="text-[10px] text-brandText/50 uppercase tracking-widest mb-1">From</p><p class="text-2xl font-bold text-brandText">₹6,999</p></div>
                                 <button onclick="openModal('Budget Goa')" class="border border-brandText/20 text-brandText w-10 h-10 rounded-full flex items-center justify-center hover:bg-brandText hover:text-white transition-colors"><i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
@@ -256,24 +232,13 @@
                             <h1 class="font-serif text-brandText mb-2">Srinagar-Gulmarg-Sonmarg-Pahalgam</h1>
                             <p class="text-xs text-brandText/60 mb-4 tracking-widest uppercase font-medium">4 Nights / 5 Days</p>
                             <div class="flex flex-wrap gap-2 mt-3 mb-4">
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-hotel text-brandAccent"></i> Hotel
-                                </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-utensils text-brandAccent"></i> Meals
-                                </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-taxi text-brandAccent"></i> Taxi
-                                </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-camera text-brandAccent"></i> Sightseeing
-                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-hotel text-brandAccent"></i> Hotel</div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-utensils text-brandAccent"></i> Meals</div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-taxi text-brandAccent"></i> Taxi</div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-camera text-brandAccent"></i> Sightseeing</div>
                             </div>
                             <div class="flex justify-between items-end border-t border-brandText/10 pt-4">
-                                <div>
-                                    <p class="text-[10px] text-brandText/50 uppercase tracking-widest mb-1">From</p>
-                                    <p class="text-2xl font-bold text-brandText">₹12,499</p>
-                                </div>
+                                <div><p class="text-[10px] text-brandText/50 uppercase tracking-widest mb-1">From</p><p class="text-2xl font-bold text-brandText">₹12,499</p></div>
                                 <button onclick="openModal('Budget Kerala')" class="border border-brandText/20 text-brandText w-10 h-10 rounded-full flex items-center justify-center hover:bg-brandText hover:text-white transition-colors"><i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
@@ -288,24 +253,13 @@
                             <h2 class="font-serif text-brandText mb-2">Haridwar-Rishikesh-Mussoorie</h2>
                             <p class="text-xs text-brandText/60 mb-4 tracking-widest uppercase font-medium">3 Nights / 4 Days</p>
                             <div class="flex flex-wrap gap-2 mt-3 mb-4">
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-hotel text-brandAccent"></i> Hotel
-                                </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-utensils text-brandAccent"></i> Meals
-                                </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-taxi text-brandAccent"></i> Taxi
-                                </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
-                                    <i class="fas fa-camera text-brandAccent"></i> Sightseeing
-                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-hotel text-brandAccent"></i> Hotel</div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-utensils text-brandAccent"></i> Meals</div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-taxi text-brandAccent"></i> Taxi</div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5"><i class="fas fa-camera text-brandAccent"></i> Sightseeing</div>
                             </div>
                             <div class="flex justify-between items-end border-t border-brandText/10 pt-4">
-                                <div>
-                                    <p class="text-[10px] text-brandText/50 uppercase tracking-widest mb-1">From</p>
-                                    <p class="text-2xl font-bold text-brandText">₹8,499</p>
-                                </div>
+                                <div><p class="text-[10px] text-brandText/50 uppercase tracking-widest mb-1">From</p><p class="text-2xl font-bold text-brandText">₹8,499</p></div>
                                 <button onclick="openModal('Budget Jaipur')" class="border border-brandText/20 text-brandText w-10 h-10 rounded-full flex items-center justify-center hover:bg-brandText hover:text-white transition-colors"><i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
@@ -815,20 +769,6 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // --- Custom Cursor Implementation ---
-        const cursorDot = document.getElementById('cursor-dot');
-        const cursorOutline = document.getElementById('cursor-outline');
-        window.addEventListener('mousemove', function(e) {
-            cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`;
-            cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
-        });
-        
-        // Add hover effects for interactive elements
-        document.querySelectorAll('.cursor-hover, button, a').forEach(el => {
-            el.addEventListener('mouseenter', () => { cursorOutline.style.width = '60px'; cursorOutline.style.height = '60px'; cursorOutline.style.backgroundColor = 'rgba(244, 151, 169, 0.1)'; cursorOutline.style.borderColor = 'rgba(244, 151, 169, 1)'; });
-            el.addEventListener('mouseleave', () => { cursorOutline.style.width = '36px'; cursorOutline.style.height = '36px'; cursorOutline.style.backgroundColor = 'transparent'; cursorOutline.style.borderColor = 'rgba(244, 151, 169, 0.8)'; });
-        });
-
         // --- 3D Hover Tilt Effect ---
         document.querySelectorAll('.tilt-card').forEach(card => {
             card.addEventListener('mousemove', e => {
@@ -1110,7 +1050,7 @@
     });
     </script>
    
-    <script>
+   <script>
     // --- Navbar Links Smooth Scroll Fix ---
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
