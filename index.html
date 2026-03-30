@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RouteMyTrip | yatra india hamare sath</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-parallax-js@5.5.1/dist/simpleParallax.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 
+                        brandBase: '#FDF2F8',    // Soft Baby Pink / Blush Background
+                        brandCard: '#FFFFFF',    // Pure white for cards to pop
+                        brandText: '#3F2E3E',    // Deep Plum/Mauve for readable premium text
+                        brandAccent: '#F497A9',  // Vibrant Soft Pink for buttons
+                        brandGold: '#D4AF37'     // Champagne Gold for stars and highlights
+                    },
+                    fontFamily: { 
+                        serif: ['"Playfair Display"', 'serif'], 
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'] 
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom Dynamic Cursor */
+        body { cursor: none; background-color: #FDF2F8; color: #3F2E3E; overflow-x: hidden; }
+        .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; }
+        .cursor-dot { width: 6px; height: 6px; background-color: #3F2E3E; }
+        .cursor-outline { width: 36px; height: 36px; border: 1.5px solid rgba(244, 151, 169, 0.8); transition: width 0.2s, height 0.2s, background-color 0.2s; }
+
+        /* Navigation & Animations */
+        .glass-nav { background: rgba(253, 242, 248, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(63, 46, 62, 0.05); }
+        .reveal-up, .reveal-left, .reveal-right { visibility: hidden; }
+        
+        /* Carousel & Parallax Settings */
+        .carousel-slide { opacity: 0; transition: opacity 1.5s ease-in-out, transform 8s linear; transform: scale(1.05); }
+        .carousel-slide.active { opacity: 1; transform: scale(1); z-index: 10; }
+        
+        /* 3D Interactive Tilt Cards */
+        .tilt-card { transform-style: preserve-3d; perspective: 1000px; transition: box-shadow 0.4s; }
+        .tilt-inner { transform: translateZ(30px); }
+        .tilt-card:hover { z-index: 20; box-shadow: 0 30px 50px rgba(63, 46, 62, 0.08); border-color: rgba(244, 151, 169, 0.3); }
+
+        /* Full Screen Single Page Application (SPA) View */
+        .full-page-view { display: none; width: 100%; min-height: 100vh; background-color: #FDF2F8; z-index: 80; }
+        body.no-scroll { overflow: hidden; }
+
+        /* Scrollbar Styling */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        ::-webkit-scrollbar { width: 6px; } 
+        ::-webkit-scrollbar-track { background: #FDF2F8; }
+        ::-webkit-scrollbar-thumb { background: #F497A9; border-radius: 10px; }
+        
+        /* Dynamic Seasonal Background Transitions */
+        #seasonal-section { transition: background 0.8s ease-in-out; }
+        .bg-winter { background: linear-gradient(to bottom, #FDF2F8, #E0E7FF); }
+        .bg-summer { background: linear-gradient(to bottom, #FDF2F8, #FEF08A); }
+        .bg-monsoon { background: linear-gradient(to bottom, #FDF2F8, #D1FAE5); }
+        
+        /* Typography Utilities */
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-brandAccent selection:text-white">
+
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <div id="main-homepage" class="overflow-x-hidden w-full relative max-w-[100vw]">
+        
+        <header class="fixed w-full z-50 glass-nav py-4 px-4 md:px-16 flex justify-between items-center transition-all duration-300" id="navbar">
+            <a href="https://www.routemytrip.in" class="flex items-center gap-4 cursor-hover">
+                <img src="IMAGE/Untitled (9).png" alt="RouteMyTrip Logo" class="h-12 md:h-20 w-auto max-w-[140px] md:max-w-none object-contain">
+                <div class="hidden sm:block h-10 w-px bg-brandText/30"></div>
+                <span class="hidden sm:block text-xs md:text-sm font-sans text-brandAccent font-bold leading-tight">Powered by: <br><span class="text-brandText">Yatra India Hamare Sath</span></span>
+            </a>
+
+            <nav class="hidden md:flex gap-8 text-sm font-bold text-brandText/70 uppercase tracking-widest">
+                <a href="#seasonal-section" class="cursor-hover hover:text-brandAccent transition">Seasons</a>
+                <a href="#packages" class="cursor-hover hover:text-brandAccent transition">Packages</a>
+                <a href="#reviews" class="cursor-hover hover:text-brandAccent transition">Reviews</a>
+                <a href="#about" class="cursor-hover hover:text-brandAccent transition">About</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <button onclick="openModal('General Enquiry')" class="cursor-hover bg-brandAccent text-white px-5 md:px-8 py-2 md:py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest shadow-lg hover:shadow-xl hover:bg-[#e88095] transition-all transform hover:scale-105">Book Now</button>
+                <button id="mobile-menu-btn" class="md:hidden text-brandText text-2xl ml-2 focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-[250px] bg-brandBase/95 backdrop-blur-xl z-[60] transform translate-x-full transition-transform duration-300 md:hidden flex flex-col items-center justify-start pt-16 gap-6 text-xl font-serif">
+            <button id="close-menu-btn" class="absolute top-6 right-6 text-3xl text-brandText">×</button>
+            <a href="#seasonal-section" class="mobile-link text-brandText hover:text-brandAccent transition-colors">Seasons</a>
+            <a href="#packages" class="mobile-link text-brandText hover:text-brandAccent transition-colors">Packages</a>
+            <a href="#reviews" class="mobile-link text-brandText hover:text-brandAccent transition-colors">Reviews</a>
+            <a href="#about" class="mobile-link text-brandText hover:text-brandAccent transition-colors">About</a>
+        </div>
+
+        <section class="relative min-h-screen md:h-[95vh] bg-brandText overflow-hidden flex items-center justify-center">
+            <div id="carousel" class="absolute inset-0 z-0">
+                <div class="carousel-slide absolute inset-0 active">
+                    <img src="IMAGE/3511547.jpg" class="w-full h-full object-cover object-center scale-[1.2] md:scale-100 transition-transform duration-[10000ms]">
+                    <div class="absolute inset-0 bg-brandText/40"></div> 
+                </div>
+                <div class="carousel-slide absolute inset-0">
+                    <img src="IMAGE/unma-desai-kpCbVvuKPHY-unsplash (1).jpg" class="w-full h-full object-cover object-center scale-[1.2] md:scale-100 transition-transform duration-[10000ms]">
+                    <div class="absolute inset-0 bg-brandText/40"></div>
+                </div>
+                <div class="carousel-slide absolute inset-0">
+                    <img src="IMAGE/mm.jpg" class="w-full h-full object-cover object-center scale-[1.2] md:scale-100 transition-transform duration-[10000ms]">
+                    <div class="absolute inset-0 bg-brandText/40"></div>
+                </div>
+            </div>
+
+            <div class="relative z-20 text-center px-6 w-full max-w-[340px] md:max-w-5xl mx-auto flex flex-col items-center justify-center pt-20 md:pt-0">
+                <h1 class="font-serif text-5xl md:text-[7rem] text-white mb-4 drop-shadow-xl reveal-up font-bold leading-tight">
+                    RouteMyTrip
+                </h1>
+                <p class="text-base md:text-2xl text-brandBase font-light leading-relaxed mb-8 drop-shadow-md reveal-up delay-1">
+                    Stop scrolling through other people's travel stories! It's time to create your own. Plan your next getaway with the best travel packages from RouteMyTrip. Customized travel packages, affordable prices, and 24/7 expert support for your perfect trip. 
+                </p>
+                <div class="reveal-up delay-2 flex justify-center w-full">
+                    <p class="text-[10px] md:text-lg text-brandText font-bold tracking-widest uppercase bg-brandBase/90 backdrop-blur-md px-6 py-2 rounded-full shadow-lg border border-white/20">
+                        POWERED BY: YATRA INDIA HAMARE SATH
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="seasonal-section" class="py-24 px-6 md:px-16 bg-winter relative overflow-hidden border-y border-brandText/5">
+            <div class="max-w-[1500px] mx-auto relative z-10">
+                
+                <div class="text-center mb-12 reveal-up">
+                    <h2 class="font-serif text-4xl md:text-5xl text-brandText mb-8">Not Sure When to Go or Where to Go?</h2>
+                    <div class="flex flex-wrap justify-center bg-white/80 backdrop-blur-md rounded-xl p-1.5 border border-brandText/5 shadow-sm gap-2 w-full md:w-auto">
+                        <button onclick="changeSeason('winter')" id="btn-winter" class="season-btn px-6 py-2.5 rounded-lg text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 text-brandText/50 hover:text-brandText"><i class="fas fa-snowflake"></i> Winter</button>
+                        <button onclick="changeSeason('summer')" id="btn-summer" class="season-btn active-season px-6 py-2.5 rounded-lg text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 bg-brandAccent text-white"><i class="fas fa-sun"></i> Summer</button>
+                        <button onclick="changeSeason('monsoon')" id="btn-monsoon" class="season-btn px-6 py-2.5 rounded-lg text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 text-brandText/50 hover:text-brandText"><i class="fas fa-cloud-rain"></i> Monsoon</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/3 bg-white/40 backdrop-blur-xl border border-white p-10 rounded-[2rem] shadow-xl reveal-left flex flex-col justify-center">
+                        <h3 id="season-title" class="font-serif text-4xl text-brandText mb-6 leading-tight">Feel the winter charm with our curated packages!</h3>
+                        <p id="season-desc" class="text-brandText/70 font-light text-lg leading-relaxed">Whether it's skiing down powdery slopes or enjoying a snug fireside stay, the ideal winter weather and experiences are ready for you.</p>
+                    </div>
+                    <div class="w-full lg:w-2/3 relative group">
+                        <button onclick="scrollSeasonCards(-300)" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-white shadow-lg text-brandText w-10 h-10 rounded-full flex items-center justify-center transition-colors opacity-0 group-hover:opacity-100 cursor-hover"><i class="fas fa-chevron-left"></i></button>
+                        <div id="season-cards" class="flex overflow-x-auto gap-6 hide-scrollbar snap-x snap-mandatory pb-4 px-2 scroll-smooth">
+                        </div>
+                        <button onclick="scrollSeasonCards(300)" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-white shadow-lg text-brandText w-10 h-10 rounded-full flex items-center justify-center transition-colors opacity-0 group-hover:opacity-100 cursor-hover"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trending" class="py-24 px-6 md:px-16 relative overflow-hidden bg-brandBase border-b border-brandText/5">
+            <div class="max-w-[1500px] mx-auto relative z-10">
+                <div class="text-center mb-16 reveal-up">
+                    <h4 class="text-brandAccent font-bold uppercase tracking-widest text-xs mb-3">Limited Time Offers</h4>
+                    <h2 class="font-serif text-5xl md:text-6xl text-brandText mb-4">Our Best Budget Packages</h2>
+                    <p class="text-brandText/60 font-medium italic animate-pulse">
+                        ✨ Special discounts available on all bookings until April 30th! ✨
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-lg tilt-card cursor-hover reveal-up border border-brandText/5 relative group">
+                        <div class="relative h-[300px] overflow-hidden m-2 rounded-t-[1.5rem]">
+                            <img src="IMAGE/SP manali.avif" class="w-full h-full object-cover parallax-img group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute top-4 left-4 z-20 bg-brandAccent text-white px-3 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase shadow-md">Signature Deal</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-2xl text-brandText mb-2">Special Manali</h3>
+                            <h1 class="font-serif text-brandText mb-2">Solang Valley-Kullu-Kasol-Manikaran</h1>
+                            <p class="text-xs text-brandText/60 mb-4 tracking-widest uppercase font-medium">4 Nights / 5 Days</p>
+                            <div class="flex flex-wrap gap-2 mt-3 mb-4">
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-hotel text-brandAccent"></i> Hotel
+                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-utensils text-brandAccent"></i> Meals
+                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-taxi text-brandAccent"></i> Taxi
+                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-camera text-brandAccent"></i> Sightseeing
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-end border-t border-brandText/10 pt-4">
+                                <div>
+                                    <p class="text-[10px] text-brandText/50 uppercase tracking-widest mb-1">From</p>
+                                    <p class="text-2xl font-bold text-brandText">₹5,999</p>
+                                </div>
+                                <button onclick="openModal('Special Manali')" class="border border-brandText/20 text-brandText w-10 h-10 rounded-full flex items-center justify-center hover:bg-brandText hover:text-white transition-colors"><i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-lg tilt-card cursor-hover reveal-up delay-1 border border-brandText/5 relative group">
+                        <div class="relative h-[300px] overflow-hidden m-2 rounded-t-[1.5rem]">
+                            <img src="IMAGE/pexels-urtimud-89-76108288-32262471.jpg" class="w-full h-full object-cover parallax-img group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-2xl text-brandText mb-2">Goa Beach Vibe</h3>
+                            <h1 class="font-serif text-brandText mb-2">North Goa</h1>
+                            <h1 class="font-serif text-brandText mb-2">South Goa</h1>
+                            <p class="text-xs text-brandText/60 mb-4 tracking-widest uppercase font-medium">3 Nights / 4 Days</p>
+                            <div class="flex flex-wrap gap-2 mt-3 mb-4">
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-hotel text-brandAccent"></i> Hotel
+                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-utensils text-brandAccent"></i> Meals
+                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-taxi text-brandAccent"></i> Taxi
+                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-camera text-brandAccent"></i> Sightseeing
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-end border-t border-brandText/10 pt-4">
+                                <div>
+                                    <p class="text-[10px] text-brandText/50 uppercase tracking-widest mb-1">From</p>
+                                    <p class="text-2xl font-bold text-brandText">₹6,999</p>
+                                </div>
+                                <button onclick="openModal('Budget Goa')" class="border border-brandText/20 text-brandText w-10 h-10 rounded-full flex items-center justify-center hover:bg-brandText hover:text-white transition-colors"><i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-lg tilt-card cursor-hover reveal-up delay-2 border border-brandText/5 relative group">
+                        <div class="relative h-[300px] overflow-hidden m-2 rounded-t-[1.5rem]">
+                            <img src="IMAGE/pexels-kamran-elyas-53440853-26125620.jpg" class="w-full h-full object-cover parallax-img group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-2xl text-brandText mb-2">Kashmir</h3>
+                            <h1 class="font-serif text-brandText mb-2">Srinagar-Gulmarg-Sonmarg-Pahalgam</h1>
+                            <p class="text-xs text-brandText/60 mb-4 tracking-widest uppercase font-medium">4 Nights / 5 Days</p>
+                            <div class="flex flex-wrap gap-2 mt-3 mb-4">
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-hotel text-brandAccent"></i> Hotel
+                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-utensils text-brandAccent"></i> Meals
+                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-taxi text-brandAccent"></i> Taxi
+                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-camera text-brandAccent"></i> Sightseeing
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-end border-t border-brandText/10 pt-4">
+                                <div>
+                                    <p class="text-[10px] text-brandText/50 uppercase tracking-widest mb-1">From</p>
+                                    <p class="text-2xl font-bold text-brandText">₹12,499</p>
+                                </div>
+                                <button onclick="openModal('Budget Kerala')" class="border border-brandText/20 text-brandText w-10 h-10 rounded-full flex items-center justify-center hover:bg-brandText hover:text-white transition-colors"><i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-lg tilt-card cursor-hover reveal-up delay-3 border border-brandText/5 relative group">
+                        <div class="relative h-[300px] overflow-hidden m-2 rounded-t-[1.5rem]">
+                            <img src="IMAGE/pexels-shivanshu-sharma-1351241-15084419.jpg" class="w-full h-full object-cover parallax-img group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-2xl text-brandText mb-2">Uttarakhand</h3>
+                            <h2 class="font-serif text-brandText mb-2">Haridwar-Rishikesh-Mussoorie</h2>
+                            <p class="text-xs text-brandText/60 mb-4 tracking-widest uppercase font-medium">3 Nights / 4 Days</p>
+                            <div class="flex flex-wrap gap-2 mt-3 mb-4">
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-hotel text-brandAccent"></i> Hotel
+                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-utensils text-brandAccent"></i> Meals
+                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-taxi text-brandAccent"></i> Taxi
+                                </div>
+                                <div class="flex items-center gap-1.5 text-[10px] font-bold text-brandText/70 bg-brandBase px-2 py-1 rounded-md border border-brandText/5">
+                                    <i class="fas fa-camera text-brandAccent"></i> Sightseeing
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-end border-t border-brandText/10 pt-4">
+                                <div>
+                                    <p class="text-[10px] text-brandText/50 uppercase tracking-widest mb-1">From</p>
+                                    <p class="text-2xl font-bold text-brandText">₹8,499</p>
+                                </div>
+                                <button onclick="openModal('Budget Jaipur')" class="border border-brandText/20 text-brandText w-10 h-10 rounded-full flex items-center justify-center hover:bg-brandText hover:text-white transition-colors"><i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="packages" class="py-24 px-6 md:px-16 max-w-[1500px] mx-auto relative z-10">
+            <div class="text-center mb-16 reveal-up">
+                <h2 class="font-serif text-4xl md:text-6xl text-brandText">Explore The Archives</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div onclick="openExplore('india-page', event)" class="relative h-[45vh] rounded-[3rem] overflow-hidden cursor-hover group shadow-xl reveal-left border border-brandText/10">
+                    <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1000&q=80" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 opacity-90">
+                    <div class="absolute inset-0 bg-brandText/30 group-hover:bg-brandText/10 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                        <h3 class="font-serif text-5xl md:text-7xl text-white mb-6 drop-shadow-md">India</h3>
+                        <span class="bg-white/90 backdrop-blur-md text-brandText px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest group-hover:bg-brandAccent group-hover:text-white transition-all transform group-hover:-translate-y-2 shadow-lg">Explore Now</span>
+                    </div>
+                </div>
+
+                <div onclick="openExplore('international-page', event)" class="relative h-[45vh] rounded-[3rem] overflow-hidden cursor-hover group shadow-xl reveal-right border border-brandText/10">
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1000&q=80" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 opacity-90">
+                    <div class="absolute inset-0 bg-brandText/30 group-hover:bg-brandText/10 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                        <h3 class="font-serif text-5xl md:text-7xl text-white mb-6 drop-shadow-md">Global</h3>
+                        <span class="bg-white/90 backdrop-blur-md text-brandText px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest group-hover:bg-brandAccent group-hover:text-white transition-all transform group-hover:-translate-y-2 shadow-lg">Explore Now</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews" class="py-24 px-6 md:px-16 bg-white/50 relative overflow-hidden border-y border-brandText/5">
+            <div class="max-w-[1500px] mx-auto flex flex-col lg:flex-row gap-12 items-center">
+                
+                <div class="w-full lg:w-1/3 reveal-left">
+                    <h2 class="font-serif text-4xl md:text-5xl text-brandText leading-tight mb-6">Dear travelers, we are grateful for being a part of your lifetime memories!</h2>
+                    <p class="text-brandText/70 font-light text-lg leading-relaxed mb-8">We measure our success by the smiles we bring to our travelers. Explore their amazing journeys with us.</p>
+                   <a href="https://www.google.com/maps/place/?q=place_id:ChIJ1ZDsxIzHdjkRQAjkcqVE2dk" target="_blank" class="inline-block border-2 border-[#F497A9] text-[#F497A9] px-8 py-3 rounded-full text-sm font-bold uppercase tracking-widest hover:bg-[#F497A9] hover:text-white transition-all duration-300 shadow-sm cursor-hover text-center">
+  VIEW ALL REVIEWS
+</a>
+                </div>
+
+                <div class="w-full lg:w-2/3 reveal-right relative group">
+                    <button onclick="scrollReviewCards(-350)" class="absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-lg text-brandText w-12 h-12 rounded-full flex items-center justify-center transition-colors opacity-0 group-hover:opacity-100 cursor-hover"><i class="fas fa-chevron-left"></i></button>
+                    <button onclick="scrollReviewCards(350)" class="absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-lg text-brandText w-12 h-12 rounded-full flex items-center justify-center transition-colors opacity-0 group-hover:opacity-100 cursor-hover"><i class="fas fa-chevron-right"></i></button>
+
+                    <div id="review-slider" class="flex overflow-x-auto gap-6 hide-scrollbar snap-x snap-mandatory py-6 px-4 scroll-smooth">
+                        
+                        <div class="min-w-[320px] md:min-w-[350px] bg-brandCard rounded-[2rem] border border-gray-100 overflow-visible snap-center flex flex-col mt-6 shadow-xl relative cursor-hover">
+                            <img src="IMAGE/manali.jpeg" class="h-48 w-full object-cover rounded-t-[2rem]">
+                            <div class="p-6 relative pt-10">
+                                <div class="absolute -top-8 left-6 w-16 h-16 rounded-full bg-[#93c5fd] text-white flex items-center justify-center font-bold text-2xl border-4 border-white shadow-sm">S</div>
+                                <h4 class="font-bold text-brandText text-xl mb-1">Sandhya Shirvastava</h4>
+                                <div class="text-brandGold text-xs mb-4 flex items-center gap-1"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span class="text-brandText/60 ml-1 font-bold">5</span></div>
+                                <p class="text-brandText/70 font-light text-sm mb-4 line-clamp-3">It was a memorable tour.. RouteMyTrip team had given good guidance pre departure. Aman contacted us multiple times to ensure everything was perfect.</p>
+                                <a href="#" class="text-brandAccent font-bold text-sm hover:text-brandText transition-colors cursor-hover">Read More</a>
+                            </div>
+                        </div>
+
+                        <div class="min-w-[320px] md:min-w-[350px] bg-brandCard rounded-[2rem] border border-gray-100 overflow-visible snap-center flex flex-col mt-6 shadow-xl relative cursor-hover">
+                            <img src="IMAGE/RIVER.jpeg" class="h-48 w-full object-cover rounded-t-[2rem]">
+                            <div class="p-6 relative pt-10">
+                                <div class="absolute -top-8 left-6 w-16 h-16 rounded-full bg-[#93c5fd] text-white flex items-center justify-center font-bold text-2xl border-4 border-white shadow-sm">R</div>
+                                <h4 class="font-bold text-brandText text-xl mb-1">Regional Institute of Nursing, Global Group of Institutions, Jabalpur M.P</h4>
+                                <div class="text-brandGold text-xs mb-4 flex items-center gap-1"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span class="text-brandText/60 ml-1 font-bold">5</span></div>
+                                <p class="text-brandText/70 font-light text-sm mb-4 line-clamp-3">Nursing ki hectic life ke baad ye Manali trip ek asli stress-buster thi! River rafting ka experience jabardast raha. Global Group ke humare poore batch ne bohot enjoy kiya. RouteMyTrip ki arrangements ekdum top-class hai!</p>
+                                <a href="#" class="text-brandAccent font-bold text-sm hover:text-brandText transition-colors cursor-hover">Read More</a>
+                            </div>
+                        </div>
+ 
+                        <div class="min-w-[320px] md:min-w-[350px] bg-brandCard rounded-[2rem] border border-gray-100 overflow-visible snap-center flex flex-col mt-6 shadow-xl relative cursor-hover">
+                            <img src="IMAGE/manali2.jpeg" class="h-48 w-full object-cover rounded-t-[2rem]">
+                            <div class="p-6 relative pt-10">
+                                <div class="absolute -top-8 left-6 w-16 h-16 rounded-full bg-[#6ee7b7] text-white flex items-center justify-center font-bold text-2xl border-4 border-white shadow-sm">A</div>
+                                <h4 class="font-bold text-brandText text-xl mb-1">Anand Agrwal</h4>
+                               <div class="text-brandGold text-xs mb-4 flex items-center gap-1">
+    <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt text-brandGold/80"></i> <span class="text-brandText/60 ml-1 font-bold">4.7</span>
+</div>
+                                <p class="text-brandText/70 font-light text-sm mb-4 line-clamp-3">This was the first time our group went on a trip with some travel agency and I do not regret choosing RouteMyTrip. The hotels, the food, everything was top-notch.</p>
+                                <a href="#" class="text-brandAccent font-bold text-sm hover:text-brandText transition-colors cursor-hover">Read More</a>
+                            </div>
+                        </div>
+
+                          <div class="min-w-[320px] md:min-w-[350px] bg-brandCard rounded-[2rem] border border-gray-100 overflow-visible snap-center flex flex-col mt-6 shadow-xl relative cursor-hover">
+                            <img src="IMAGE/WhatsApp Image 2026-03-26 at 2.25.07 PM (1).jpeg" class="h-48 w-full object-cover rounded-t-[2rem]">
+                            <div class="p-6 relative pt-10">
+                                <div class="absolute -top-8 left-6 w-16 h-16 rounded-full bg-[#93c5fd] text-white flex items-center justify-center font-bold text-2xl border-4 border-white shadow-sm">J</div>
+                                <h4 class="font-bold text-brandText text-xl mb-1"> Jay bairagi</h4>
+                               <div class="text-brandGold text-xs mb-4 flex items-center gap-1">
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="far fa-star"></i> <span class="text-brandText/60 ml-1 font-bold">4.8</span>
+</div>
+                                <p class="text-brandText/70 font-light text-sm mb-4 line-clamp-3">Our Kashmir trip was truly exceptional! Aman ji (Tour Operator) khud saath teh toh kisi cheez ki tension hi nahi hui. Pre-departure guidance se lekar on-trip support tak, RouteMyTrip ne har baat ka dhyan rakha. Itna personal touch aur care pehle kabhi nahi dekha. Truly experience!</p>
+                                <a href="#" class="text-brandAccent font-bold text-sm hover:text-brandText transition-colors cursor-hover">Read More</a>
+                            </div>
+                    </div>
+
+                    <div class="min-w-[320px] md:min-w-[350px] bg-brandCard rounded-[2rem] border border-gray-100 overflow-visible snap-center flex flex-col mt-6 shadow-xl relative cursor-hover">
+                            <img src="IMAGE/new reiview1.jpeg" class="h-48 w-full object-cover rounded-t-[2rem]">
+                            <div class="p-6 relative pt-10">
+                                <div class="absolute -top-8 left-6 w-16 h-16 rounded-full bg-[#93c5fd] text-white flex items-center justify-center font-bold text-2xl border-4 border-white shadow-sm">S</div>
+                                <h4 class="font-bold text-brandText text-xl mb-1">Bablu Chouhan</h4>
+                                <div class="text-brandGold text-xs mb-4 flex items-center gap-1"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span class="text-brandText/60 ml-1 font-bold">5</span></div>
+                                <p class="text-brandText/70 font-light text-sm mb-4 line-clamp-3">Manali trip ekdum memorable rahi! Sabse acchi baat ye thi ki Aman bhai (Tour Operator) khud hamare saath teh, unhone har cheez ka dhyan rakha. Pre-departure guidance se lekar on-trip coordination tak, RouteMyTrip ki service bohot personal aur genuine hai. Best experience</p>
+                                <a href="#" class="text-brandAccent font-bold text-sm hover:text-brandText transition-colors cursor-hover">Read More</a>
+                            </div>
+                        </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="about" class="py-24 px-6 md:px-16 max-w-[1400px] mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row gap-16 items-center relative z-10">
+                <div class="w-full md:w-1/2 reveal-left tilt-card cursor-hover">
+                    <div class="relative rounded-[1.5rem] overflow-hidden shadow-2xl border border-brandText/10">
+                        <img src="IMAGE/review img.jpeg" class="w-full h-[450px] object-cover parallax-img">
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 reveal-right">
+                    <h4 class="text-brandAccent font-bold uppercase tracking-widest text-xs mb-4 flex items-center gap-2"><div class="w-8 h-px bg-brandAccent"></div> The Journey</h4>
+                    <h2 class="font-serif text-5xl md:text-6xl text-brandText mb-6 leading-tight">Crafting Your <br><span class="italic text-brandText/60 font-light">Perfect Escape.</span></h2>
+                    <p class="text-brandText/80 font-light text-lg mb-8 leading-relaxed">As the premium evolution of Yatra India Hamare Sath, we bring you meticulously planned itineraries that fit both your cinematic dreams and your budget.</p>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-brandAccent/10 flex items-center justify-center text-brandAccent shrink-0 border border-brandAccent/20"><i class="fas fa-gem"></i></div>
+                            <div>
+                                <h4 class="text-brandText font-bold tracking-wide">Premium Experiences</h4>
+                                <p class="text-sm text-brandText/60 mt-1">Handpicked resorts and transparent pricing with zero hidden fees.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-brandAccent/10 flex items-center justify-center text-brandAccent shrink-0 border border-brandAccent/20"><i class="fab fa-whatsapp"></i></div>
+                            <div>
+                                <h4 class="text-brandText font-bold tracking-wide">24/7 Dedicated Support</h4>
+                                <p class="text-sm text-brandText/60 mt-1">On-Trip Assistance & Concierge via WhatsApp & Call throughout your journey.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <section id="our-team" class="py-20 bg-brandBase relative overflow-hidden">
+                <div class="max-w-[1200px] mx-auto px-6 relative z-10">
+                    
+                    <div class="text-center mb-16 reveal-up">
+                        <h4 class="text-brandAccent font-bold uppercase tracking-widest text-xs mb-3">Who We Are</h4>
+                        <h2 class="font-serif text-5xl text-brandText">Meet Our Founders</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                        
+                        <div class="bg-white p-8 rounded-[2rem] shadow-xl border border-brandText/5 text-center reveal-up hover:shadow-2xl transition-all group border-t-4 border-t-brandAccent">
+                            <div class="w-32 h-32 bg-brandText/10 rounded-full mx-auto mb-6 overflow-hidden border-4 border-brandAccent/20">
+                                <img src="IMAGE/chachu11.jpeg" class="w-full h-full object-cover">
+                            </div>
+                            <h3 class="font-serif text-2xl text-brandText mb-1">Aman Singh Bhadoriya</h3>
+                            <p class="text-brandAccent font-bold uppercase tracking-widest text-[10px] mb-4 text-center justify-center flex">Managing Director & Strategy</p>
+                            <p class="text-brandText/60 text-sm italic leading-relaxed">
+                                "Handling the core operations and ensuring every trip is planned with perfection and safety."
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-[2rem] shadow-xl border border-brandText/5 text-center reveal-up delay-1 hover:shadow-2xl transition-all group border-t-4 border-t-brandAccent">
+                            <div class="w-32 h-32 bg-brandText/10 rounded-full mx-auto mb-6 overflow-hidden border-4 border-brandAccent/20">
+                                <img src="IMAGE/dhruv44.jpeg">
+                            </div>
+                            <h3 class="font-serif text-2xl text-brandText mb-1">Dhruv Singh Bhadoriya</h3>
+                            <p class="text-brandAccent font-bold uppercase tracking-widest text-[10px] mb-4 text-center justify-center flex">Head of Technology & Marketing</p>
+                            <p class="text-brandText/60 text-sm italic leading-relaxed">
+                                "Designing the digital experience and reaching out to travelers to make their dream vacations a reality."
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <footer class="bg-brandBase py-20 px-6 mt-10 border-t border-brandText/10 relative z-20">
+            <div class="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-left">
+                
+                <div class="space-y-4">
+                    <a href="https://www.routemytrip.in">
+                        <img src="IMAGE/Untitled (8).png" alt="RouteMyTrip Logo" class="h-24 w-auto object-contain drop-shadow-lg rounded-full mb-6 hover:scale-105 transition-transform">
+                    </a>
+                    <h4 class="text-brandText font-bold text-lg uppercase tracking-wide">Our Agency</h4>
+                    <p class="text-brandText/70 font-light leading-relaxed">Backed by the experience of Yatra India Hamare Sath (established in 2023), our new venture RouteMyTrip curates genuine luxury experiences for the discerning traveler. We blend personalized service with unbeatable affordability.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-brandText font-bold text-lg uppercase tracking-wide">Explore</h4>
+                    <ul class="space-y-2 text-brandText/80 font-light">
+                        <li><a href="#seasonal-section" class="hover:text-brandAccent transition">Current Seasons</a></li>
+                        <li><a href="#packages" class="hover:text-brandAccent transition">Archive Packages</a></li>
+                        <li><a href="#reviews" class="hover:text-brandAccent transition">Traveler Stories</a></li>
+                        <li><a href="#about" class="hover:text-brandAccent transition">Our Story</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-brandText font-bold text-lg uppercase tracking-wide">Contact Details</h4>
+                    <ul class="space-y-3 text-brandText/80 font-light">
+                        <li>Phone: +91 7695006101, +91 9424824894</li>
+                        <li>Email: yatrainidiasales77@gmail.com</li>
+                        <li>Email: routemytrip77@gmail.com</li>
+                        <li>Website: <a href="https://www.routemytrip.in" target="_blank" class="hover:text-brandAccent transition font-bold">www.routemytrip.in</a></li>
+                        <li class="pt-2 font-medium">Head Office:</li>
+                        <li>Shop No 2, Near Sindhiya Park, Birla Nagar, Gwalior (M.P.) 474004</li>
+                        <li class="pt-2 font-medium">Branch Office:</li>
+                        <li>Ujjain (Madhya Pradesh)</li>
+                        <li>"24/7 Human Support: Reach us anytime on WhatsApp or Call"</li>
+                    </ul>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-brandText font-bold text-lg uppercase tracking-wide">Services & Connect</h4>
+                    
+                    <ul class="space-y-2 text-brandText/80 font-light list-inside list-disc marker:text-brandAccent">
+                        <li>Domestic & International Tour packages</li>
+                        <li>Hotel Reservation</li>
+                        <li>Flight Tickets</li>
+                        <li>Cruise Ticket</li>
+                        <li>Train Bus Ticket</li>
+                    </ul>
+
+                    <div class="flex items-center gap-4 pt-6 border-t border-brandText/10 justify-center md:justify-start">
+                        <a href="https://www.instagram.com/yatra_indiahamaresath?igsh=MWZtNmFpeTB4MGIxbw==" target="_blank" class="cursor-hover" title="Visit Our Instagram Page">
+                            <i class="fab fa-instagram text-3xl text-brandPlum hover:text-brandAccent transition-colors"></i>
+                        </a>
+                    </div>
+                    
+                    <ul class="space-y-2 text-brandText/80 font-light pt-4">
+                        <li><a href="#" class="hover:text-brandAccent transition">Terms & Conditions</a></li>
+                        <li><a href="#" class="hover:text-brandAccent transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="max-w-[1500px] mx-auto h-px bg-brandText/10 my-16"></div>
+
+            <p class="text-xs text-brandText/50 uppercase tracking-widest text-center mt-10">
+                © 2026 <a href="https://www.routemytrip.in" class="hover:text-brandAccent">RouteMyTrip</a>. All Rights Reserved. Powered by Yatra India Hamare Sath.
+            </p>
+        </footer>
+    </div>
+
+    <div id="india-page" class="full-page-view">
+        <header class="sticky top-0 w-full z-50 glass-nav py-5 px-6 md:px-12 flex justify-between items-center shadow-sm">
+           <button onclick="returnToHome('india-page')" class="text-brandText font-bold flex items-center gap-3 cursor-hover hover:text-brandAccent transition uppercase tracking-widest text-xs">
+                <i class="fas fa-arrow-left"></i> Return
+            </button>
+            <span class="text-xl font-serif font-bold text-brandText hidden md:block">Domestic Packages</span>
+        </header>
+
+        <div class="pt-10 pb-20 px-6 md:px-16 max-w-[1500px] mx-auto w-full">
+            <h2 class="font-serif text-5xl md:text-7xl text-brandText mb-12 text-center">Incredible India</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full">
+                
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/rajasthan1.jpg" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Rajasthan Palaces</h4>
+                        <div><h2 class="font-serif mb-auto">3 Nights / 4 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 4,499</span> 
+                            <button onclick="openModal('Rajasthan Palaces')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/1280px-Shri_Jagannath_temple.jpg" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Puri-Bhubneshwar-Konark</h4>
+                        <div><h2 class="font-serif mb-auto">2 Nights / 3 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 5,999</span> 
+                            <button onclick="openModal('Nainital Escape')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/pexels-shivanshu-sharma-1351241-15084419.jpg" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Uttarakhand</h4>
+                        <h1 class="font-serif mb-auto">Haridwar-Rishikesh-Mussoorie-Nainital</h1>
+                        <div><h2 class="font-serif mb-auto">5 Nights / 6 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 14,899</span> 
+                            <button onclick="openModal('Kashmir Paradise')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Goa Beaches</h4> <h1 class="font-serif mb-auto">North Goa-South Goa</h1>
+                        <div><h2 class="font-serif mb-auto">3 Nights / 4 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 6,999</span> 
+                            <button onclick="openModal('Goa Vibes')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/dharamsala.avif" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Dharamshala-Dalhousie-Amritsar</h4>
+                
+                        <div><h2 class="font-serif mb-auto">3 Nights / 4 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 8,499</span> 
+                            <button onclick="openModal('Rajasthan Palaces')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/banglore.jpg" class="w-full h-48 object-cover rounded-2xl transition-all duration-500"> 
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Banglore-Mysore-Ooty</h4>
+                        <div><h2 class="font-serif mb-auto">3 Nights / 4 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 9,499</span> 
+                            <button onclick="openModal('Nainital Escape')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/pexels-kamran-elyas-53440853-26125620.jpg" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Kashmir Paradise</h4> <h1 class="font-serif mb-auto">Srinagar-Gulmarg-Sonmarg-Pahalgam</h1>
+                        <div><h2 class="font-serif mb-auto">4 Nights / 5 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 12,499</span> 
+                            <button onclick="openModal('Kashmir Paradise')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/pelling 22.avif" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">NORTH EAST</h4> <h1 class="font-serif mb-auto">Darjeeling-Gangtok-Pelling</h1>
+                        <div><h2 class="font-serif mb-auto">5 Nights / 6 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 14,899</span> 
+                            <button onclick="openModal('Kashmir Paradise')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div> 
+        </div>
+    </div>
+
+    <div id="international-page" class="full-page-view">
+        <header class="sticky top-0 w-full z-50 glass-nav py-5 px-6 md:px-12 flex justify-between items-center shadow-sm">
+            <button onclick="returnToHome('international-page')" class="text-brandText font-bold flex items-center gap-3 cursor-hover hover:text-brandAccent transition uppercase tracking-widest text-xs">
+                <i class="fas fa-arrow-left"></i> Return
+            </button>
+            <span class="text-xl font-serif font-bold text-brandText hidden md:block">Global Packages</span>
+        </header>
+
+        <div class="pt-10 pb-20 px-6 md:px-16 max-w-[1500px] mx-auto w-full">
+            <h2 class="font-serif text-5xl md:text-7xl text-brandText mb-12 text-center">Global Escapes</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full">
+                
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/dubai.webp" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Luxury Dubai</h4>
+                        <div><h2 class="font-serif mb-auto">4 Nights / 5 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 45,999</span> 
+                            <button onclick="openModal('Luxury Dubai')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/maldives.avif" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Maldives Retreat</h4>
+                        <div><h2 class="font-serif mb-auto">4 Nights / 5 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 59,999</span> 
+                            <button onclick="openModal('Maldives Retreat')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/old-town-istanbul-fatih-district-sa-1-4leymaniye-mosque-turkey_483040-1451.avif" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Türkiye</h4>
+                        <div><h2 class="font-serif mb-auto">3 Nights / 4 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 34,799</span> 
+                            <button onclick="openModal('Paris Romance')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/lumpur city.webp" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Malaysia</h4>
+                        <h1 class="font-serif mb-auto">KUALA  LUMPUR Shopping + Sightseeing Package</h1>
+                        <div><h2 class="font-serif mb-auto">3 Nights / 4 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 16,299</span> 
+                            <button onclick="openModal('Swiss Alps')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/Bali.jpg" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Bali Tropics</h4>
+                        <div><h2 class="font-serif mb-auto">7 Nights / 8 Days</h2></div>
+                        
+                        
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 64,999</span> 
+                            <button onclick="openModal('Bali Tropics')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/singapore1.avif" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Singapore City</h4>
+                        <div><h2 class="font-serif mb-auto">4 Nights / 5 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 39,999</span> 
+                            <button onclick="openModal('Singapore City')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/1763774837-2963232880-g.jpg" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Thailand </h4>
+                        <div><h2 class="font-serif mb-auto">4 Nights / 5 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 48,999</span> 
+                            <button onclick="openModal('Thailand Beaches')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brandCard rounded-[2rem] overflow-hidden shadow-xl tilt-card cursor-hover border border-brandText/5 p-2 flex flex-col h-full w-full">
+                    <img src="IMAGE/premium_photo-1754251504637-d6ddbc61bfa6.avif" class="w-full h-48 object-cover rounded-2xl transition-all duration-500">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-serif text-2xl text-brandText font-bold mb-auto">Almaty City in Kazakhstan</h4>
+                        <div><h2 class="font-serif mb-auto">4 Nights / 5 Days</h2></div>
+                        <div class="flex justify-between items-center border-t border-brandText/10 pt-4 mt-4">
+                            <span class="text-xl font-black text-brandText">₹ 30,599</span> 
+                            <button onclick="openModal('London Classics')" class="bg-brandText text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-lg hover:bg-brandAccent transition-colors">Book</button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+   
+    <div id="leadModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center px-4">
+        <div class="absolute inset-0 bg-brandText/80 backdrop-blur-md" onclick="closeModal()"></div>
+        <div class="bg-brandCard border border-brandText/10 rounded-[2rem] w-full max-w-md p-10 relative z-20 shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="modalContent">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-brandText text-2xl transition cursor-hover">×</button>
+            <div class="w-16 h-16 bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] rounded-full flex items-center justify-center text-3xl mb-6 mx-auto"><i class="fab fa-whatsapp"></i></div>
+            <h3 class="font-serif text-4xl text-brandText text-center mb-2 font-bold">Fast Booking</h3>
+            <p class="text-gray-500 text-sm text-center mb-8 font-light">Connect securely via WhatsApp.</p>
+            
+            <form id="leadForm" class="space-y-6">
+                <input type="hidden" id="selectedPackage">
+                <input type="text" id="userName" required class="w-full px-5 py-4 rounded-xl bg-white border border-gray-200 text-brandText focus:border-brandAccent outline-none transition cursor-hover font-light" placeholder="Full Name">
+                <input type="tel" id="userPhone" required class="w-full px-5 py-4 rounded-xl bg-white border border-gray-200 text-brandText focus:border-brandAccent outline-none transition cursor-hover font-light" placeholder="WhatsApp Number">
+                <button type="submit" class="w-full bg-[#25D366] text-white py-4 rounded-xl font-bold tracking-widest uppercase hover:scale-105 transition-transform shadow-lg mt-6 cursor-hover">Proceed to Chat</button>
+            </form>
+        </div>
+    </div>
+
+    <button onclick="openModal('Floating Support Inquiry')" class="fixed bottom-8 right-8 z-40 bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-lg hover:scale-110 transition-transform cursor-hover">
+        <i class="fab fa-whatsapp"></i>
+    </button>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- Custom Cursor Implementation ---
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        window.addEventListener('mousemove', function(e) {
+            cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`;
+            cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
+        });
+        
+        // Add hover effects for interactive elements
+        document.querySelectorAll('.cursor-hover, button, a').forEach(el => {
+            el.addEventListener('mouseenter', () => { cursorOutline.style.width = '60px'; cursorOutline.style.height = '60px'; cursorOutline.style.backgroundColor = 'rgba(244, 151, 169, 0.1)'; cursorOutline.style.borderColor = 'rgba(244, 151, 169, 1)'; });
+            el.addEventListener('mouseleave', () => { cursorOutline.style.width = '36px'; cursorOutline.style.height = '36px'; cursorOutline.style.backgroundColor = 'transparent'; cursorOutline.style.borderColor = 'rgba(244, 151, 169, 0.8)'; });
+        });
+
+        // --- 3D Hover Tilt Effect ---
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const { left, top, width, height } = card.getBoundingClientRect();
+                gsap.to(card, { rotationY: ((e.clientX - left) / width - 0.5) * 20, rotationX: ((e.clientY - top) / height - 0.5) * -20, ease: 'power2.out', transformPerspective: 1000, duration: 0.5 });
+            });
+            card.addEventListener('mouseleave', () => { gsap.to(card, { rotationY: 0, rotationX: 0, ease: 'power2.out', duration: 0.5 }); });
+        });
+
+        // --- Parallax Effects & Hero Carousel ---
+        new simpleParallax(document.querySelectorAll('.parallax-img'), { scale: 1.2, delay: 0.1 });
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        setInterval(() => { slides[currentSlide].classList.remove('active'); currentSlide = (currentSlide + 1) % slides.length; slides[currentSlide].classList.add('active'); }, 5000);
+
+        // --- Scroll Reveal Animations ---
+        gsap.utils.toArray('.reveal-up').forEach(el => { gsap.fromTo(el, { autoAlpha: 0, y: 60, scale: 0.95 }, { autoAlpha: 1, y: 0, scale: 1, duration: 1.2, ease: "power4.out", scrollTrigger: { trigger: el, start: "top 85%" } }); });
+        gsap.utils.toArray('.reveal-left').forEach(el => { gsap.fromTo(el, { autoAlpha: 0, x: -80 }, { autoAlpha: 1, x: 0, duration: 1.2, ease: "power4.out", scrollTrigger: { trigger: el, start: "top 85%" } }); });
+        gsap.utils.toArray('.reveal-right').forEach(el => { gsap.fromTo(el, { autoAlpha: 0, x: 80 }, { autoAlpha: 1, x: 0, duration: 1.2, ease: "power4.out", scrollTrigger: { trigger: el, start: "top 85%" } }); });
+
+        // --- Dynamic Seasonal Packages Configuration ---
+        const seasonalData = {
+            winter: {
+                bgClass: "bg-winter",
+                title: "Feel the winter charm with our curated packages!",
+                desc: "Whether it's skiing down powdery slopes or enjoying a snug fireside stay, the ideal winter weather and experiences are ready for you.",
+                cards: [
+                    { img: "https://t3.ftcdn.net/jpg/04/37/91/72/360_F_437917209_fZPcDkpnEpZJ2oWFpNbqYATQ39UJFcZl.jpg", title: "Kashmir Snow", days: "4 Nights / 5 Days", price: "₹ 12,499" },
+                    { img: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=600&q=80", title: "Manali Winters", days: "4 Nights / 5 Days", price: "₹ 5,999" },
+                    { img: "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=600&q=80", title: "Swiss Alps Tour", days: "6 Nights / 7 Days", price: "₹ 1,45,000" }
+                ]
+            },
+            summer: {
+                bgClass: "bg-summer",
+                title: "Feel the summer vibes with our exclusive holiday packages!",
+                desc: "From sun-kissed beaches to vibrant city escapes, soak up the perfect weather and create unforgettable memories.",
+                cards: [
+                    { img: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80", title: "Goa Beach Party", days: "3 Nights / 4 Days", price: "₹ 6,999" },
+                    { img: "https://img.freepik.com/free-photo/woman-standing-pond-with-colorful-fish-tirta-gangga-water-palace-bali-indonesia_335224-358.jpg?t=st=1774806087~exp=1774809687~hmac=a8eda143a5d2549b46b992baecf7188cd323a2568a723802298b1d94168a7c77&w=1480", title: "Bali ", days: "7 Nights / 8 Days", price: "₹ 64,999" },
+                    { img: "https://media.assettype.com/deccanherald%2F2025-09-06%2Fkncdyw0b%2Ffile827obusfa1xn93edg5v.jpg?w=900&auto=format%2Ccompress&fit=max", title: "BAKU", days: "4 Nights / 5 Days", price: "₹ 31,199" }
+                ]
+            },
+            monsoon: {
+                bgClass: "bg-monsoon",
+                title: "Monsoon moods, made memorable with RouteMyTrip!",
+                desc: "Let the rains rejuvenate your spirit as you explore scenic destinations wrapped in the beauty of the monsoon season.",
+                cards: [
+                    { img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80", title: "Grand Kerala", days: "6 Nights / 7 Days", price: "₹ 14,000" },
+                    { img: "https://images.pexels.com/photos/13045091/pexels-photo-13045091.jpeg?_gl=1*jf6ule*_ga*MjExMjMxODQ2Mi4xNzc0NzA0MzE2*_ga_8JE65Q40S6*czE3NzQ4MDgxOTUkbzUkZzEkdDE3NzQ4MDgyMjEkajM0JGwwJGgw", title: "Munnar Calling", days: "4 Nights / 5 Days", price: "₹ 20,799" },
+                    { img: "https://5.imimg.com/data5/SELLER/Default/2022/6/JP/NP/YX/8001513/wayanad-package-500x500.jpg", title: "Wayanad Break", days: "4 Nights / 5 Days", price: "₹ 20,199" }
+                ]
+            }
+        };
+
+        /**
+         * Switches the active season and triggers corresponding UI updates
+         * @param {string} season - The season key ('winter', 'summer', 'monsoon')
+         */
+        function changeSeason(season) {
+            // Reset button states
+            document.querySelectorAll('.season-btn').forEach(btn => {
+                btn.classList.remove('bg-brandAccent', 'text-white');
+                btn.classList.add('text-brandText/50');
+            });
+            
+            // Set active button state
+            const activeBtn = document.getElementById(`btn-${season}`);
+            activeBtn.classList.remove('text-brandText/50');
+            activeBtn.classList.add('bg-brandAccent', 'text-white');
+
+            // Update container background class
+            const section = document.getElementById('seasonal-section');
+            section.className = `py-24 px-6 md:px-16 relative overflow-hidden border-y border-brandText/5 ${seasonalData[season].bgClass}`;
+
+            // Animate and update textual content
+            const titleEl = document.getElementById('season-title');
+            const descEl = document.getElementById('season-desc');
+            
+            gsap.to([titleEl, descEl], { opacity: 0, y: -10, duration: 0.3, onComplete: () => {
+                titleEl.innerText = seasonalData[season].title;
+                descEl.innerText = seasonalData[season].desc;
+                gsap.to([titleEl, descEl], { opacity: 1, y: 0, duration: 0.4 });
+            }});
+
+            // Render and animate corresponding package cards
+            const container = document.getElementById('season-cards');
+            gsap.to(container.children, { opacity: 0, scale: 0.9, duration: 0.3, stagger: 0.05, onComplete: () => {
+                container.innerHTML = seasonalData[season].cards.map(card => `
+                    <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl border border-gray-100 p-3 snap-center cursor-hover hover:shadow-xl transition-all">
+                        <img src="${card.img}" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <div class="px-2 pb-2">
+                            <h4 class="font-serif text-xl text-brandText font-bold mb-1">${card.title}</h4>
+                            <div class="flex justify-between items-center text-gray-500 text-sm mb-4"><span>${card.days}</span></div>
+                            <div class="flex justify-between items-center border-t border-gray-100 pt-4">
+                                <span class="text-xl font-black text-brandText">${card.price}</span>
+                                <button onclick="openModal('${card.title}')" class="bg-brandText hover:bg-brandAccent text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors">Book</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                gsap.fromTo(container.children, { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: "back.out(1.2)" });
+            }});
+        }
+        
+        // Initialize default season view
+        changeSeason('summer');
+
+        // --- Horizontal Scrolling Utilities ---
+        function scrollSeasonCards(amount) { document.getElementById('season-cards').scrollBy({ left: amount, behavior: 'smooth' }); }
+        function scrollReviewCards(amount) { document.getElementById('review-slider').scrollBy({ left: amount, behavior: 'smooth' }); }
+        
+        // --- Dynamic "Read More" Logic for Reviews ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const reviewSection = document.getElementById('reviews');
+            if(!reviewSection) return;
+            
+            // Select all trigger anchors within the reviews section
+            const readMoreLinks = reviewSection.querySelectorAll('a[href="#"]');
+            
+            readMoreLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent default anchor jumping behavior
+                    
+                    // Target the adjacent paragraph element
+                    let paragraph = this.previousElementSibling;
+                    
+                    if (paragraph && paragraph.tagName === 'P') {
+                        // Toggle line-clamping utility class
+                        paragraph.classList.toggle('line-clamp-3');
+                        
+                        // Update anchor text based on clamp state
+                        if (paragraph.classList.contains('line-clamp-3')) {
+                            this.innerText = "Read More";
+                        } else {
+                            this.innerText = "Read Less";
+                        }
+                    }
+                });
+            });
+        });
+
+        // --- Lead Generation Modal Controllers ---
+        function openModal(pkg) { 
+            document.getElementById('selectedPackage').value = pkg; 
+            const m = document.getElementById('leadModal'); 
+            const mc = document.getElementById('modalContent'); 
+            m.classList.remove('hidden'); 
+            setTimeout(() => mc.classList.remove('scale-95', 'opacity-0'), 10); 
+        }
+        
+        function closeModal() { 
+            const m = document.getElementById('leadModal'); 
+            const mc = document.getElementById('modalContent'); 
+            mc.classList.add('scale-95', 'opacity-0'); 
+            setTimeout(() => m.classList.add('hidden'), 300); 
+        }
+
+        // --- Form Submission & Integration Handlers ---
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Extract input values
+            const name = document.getElementById('userName').value;
+            const phone = document.getElementById('userPhone').value;
+            const pkg = document.getElementById('selectedPackage').value;
+            
+            // Target Google App Script Endpoint
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyJ6P1bo4J0tFhUi8zAJzduQaHmjRiBRuq1FUyVxDDqcOZiIq0nyJDFmrnFYDsDWzByOA/exec';
+            
+            // Construct payload payload
+            let formData = new FormData();
+            formData.append('name', name);
+            formData.append('phone', phone);
+            formData.append('package', pkg);
+            
+            // Execute asynchronous backend submission
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => {
+                    console.log('Success! Data saved to Sheet');
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                });
+            
+            // Initialize WhatsApp redirection with pre-filled context
+            const whatsappNumber = "917695006101";
+            const message = `Hi RouteMyTrip! I visited your website (www.routemytrip.in). I am ${name} (Phone: ${phone}). I am interested in knowing more about the ${pkg} package.`;
+            
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+            
+            // Teardown
+            closeModal();
+            this.reset();
+        });
+
+        // --- Mobile Navigation Handlers ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        if(mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('translate-x-full');
+            });
+        }
+
+        if(closeMenuBtn) {
+            closeMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+            });
+        }
+
+        // Auto-collapse mobile menu on link interaction
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+            });
+        });
+        
+    </script>
+    
+    <script>
+    function openExplore(pageId, event) {
+        if (event) {
+            event.preventDefault();
+        }
+
+        const home = document.getElementById('main-homepage');
+        const target = document.getElementById(pageId);
+
+        if (home && target) {
+            // URL ko update karta hai taaki browser ko naya page lage
+            history.pushState({ id: pageId }, '', '#' + pageId);
+
+            home.style.display = 'none';
+            target.style.display = 'block';
+
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            document.body.style.overflow = 'auto';
+            document.documentElement.style.overflow = 'auto';
+            document.body.classList.remove('no-scroll');
+        }
+    }
+
+    function returnToHome(pageId) {
+        // Return dabane par browser automatically ek step back jayega
+        history.back();
+    }
+
+    // Ye code swipe-back ya browser back button ko handle karega
+    window.addEventListener('popstate', function(event) {
+        const home = document.getElementById('main-homepage');
+        const indiaPage = document.getElementById('india-page');
+        const intPage = document.getElementById('international-page');
+        const hash = window.location.hash;
+
+        if (hash === '#india-page' || hash === '#international-page') {
+            const target = document.getElementById(hash.substring(1));
+            if (home) home.style.display = 'none';
+            if (indiaPage) indiaPage.style.display = 'none';
+            if (intPage) intPage.style.display = 'none';
+            if (target) {
+                target.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'instant' });
+            }
+        } else {
+            if (indiaPage) indiaPage.style.display = 'none';
+            if (intPage) intPage.style.display = 'none';
+            if (home) home.style.display = 'block';
+            setTimeout(() => {
+                const archivesSection = document.getElementById('packages');
+                if (archivesSection) {
+                    archivesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 50);
+        }
+    });
+    </script>
+</body>
+</html>

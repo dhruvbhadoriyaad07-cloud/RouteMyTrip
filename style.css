@@ -1,0 +1,115 @@
+/* Basic Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.reviews-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 50px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fdfafb;
+}
+
+/* Left Section Styles */
+.reviews-left {
+  flex: 1 1 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.reviews-left h2 {
+  font-size: 2.5rem;
+  color: #3d2c3e;
+  font-family: "Georgia", serif;
+}
+
+.reviews-left p {
+  color: #666;
+  line-height: 1.6;
+}
+
+.btn-view-all {
+  display: inline-block;
+  padding: 12px 25px;
+  border: 2px solid #f8a5c2;
+  color: #f8a5c2;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  width: fit-content;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.btn-view-all:hover {
+  background-color: #f8a5c2;
+  color: #fff;
+}
+
+/* Right Section Styles */
+.reviews-right {
+  flex: 2 1 600px;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.review-card {
+  min-width: 300px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.user-info { display: flex; align-items: center; gap: 15px; }
+.avatar { 
+  width: 50px; 
+  height: 50px; 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  color: white; 
+  font-weight: bold; 
+  font-size: 1.2rem;
+}
+.details h4 { margin-bottom: 5px; color: #333; }
+.stars { color: #f1c40f; font-size: 0.9rem; }
+
+.review-text { color: #666; line-height: 1.6; font-size: 0.95rem; }
+.read-more-btn { 
+  color: #f8a5c2; 
+  text-decoration: none; 
+  font-weight: bold; 
+  font-size: 0.9rem; 
+  margin-top: auto; 
+  display: inline-block;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .reviews-section {
+    flex-direction: column;
+  }
+  .reviews-right {
+    flex-direction: column; /* Mobile par cards upar-neeche aayenge */
+    overflow-x: visible;
+  }
+  .review-card {
+    min-width: 100%;
+  }
+}
