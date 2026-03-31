@@ -954,9 +954,18 @@
                     console.error('Error!', error.message);
                 });
             
-            // Initialize WhatsApp redirection with pre-filled context
+            // Initialize WhatsApp redirection with smart message
             const whatsappNumber = "917695006101";
-            const message = `Hi RouteMyTrip! I visited your website (www.routemytrip.in). I am ${name} (Phone: ${phone}). I am interested in knowing more about the ${pkg} package.`;
+            let message = "";
+            
+            // --- SMART MESSAGE LOGIC ---
+            if(pkg === 'Floating Support Inquiry' || pkg === 'General Enquiry') {
+                // Agar customer ne floating icon ya header wale book now pe click kiya hai
+                message = `Hi RouteMyTrip! I visited your website (www.routemytrip.in). I am ${name} (Phone: ${phone}). I am interested in planning a trip and need some information.`;
+            } else {
+                // Agar customer ne kisi specific package (Jaise Manali, Goa) pe click kiya hai
+                message = `Hi RouteMyTrip! I visited your website (www.routemytrip.in). I am ${name} (Phone: ${phone}). I am interested in knowing more about the ${pkg} package.`;
+            }
             
             window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
             
