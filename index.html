@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -188,12 +188,12 @@
         <header
             class="fixed w-full z-50 glass-nav py-4 px-4 md:px-16 flex justify-between items-center transition-all duration-300"
             id="navbar">
-            <a href="https://www.routemytrip.in" class="flex items-center gap-4 cursor-hover">
+            <a href="https://www.routemytrip.in" class="flex items-center gap-2 md:gap-4 cursor-hover">
                 <img src="IMAGE/Untitled (9).png" alt="RouteMyTrip Logo"
-                    class="h-12 md:h-20 w-auto max-w-[140px] md:max-w-none object-contain">
-                <div class="hidden sm:block h-10 w-px bg-brandText/30"></div>
+                    class="h-10 md:h-20 w-auto max-w-[100px] md:max-w-none object-contain">
+                <div class="block h-8 md:h-10 w-px bg-brandText/30"></div>
                 <span
-                    class="hidden sm:block text-xs md:text-sm font-sans text-brandAccent font-bold leading-tight">Powered
+                    class="block text-[8px] md:text-sm font-sans text-brandAccent font-bold leading-tight">Powered
                     by: <br><span class="text-brandText">Yatra India Hamare Sath</span></span>
             </a>
 
@@ -608,8 +608,8 @@
                             <div class="p-6 relative pt-10">
                                 <div
                                     class="absolute -top-8 left-6 w-16 h-16 rounded-full bg-[#6ee7b7] text-white flex items-center justify-center font-bold text-2xl border-4 border-white shadow-sm">
-                                    A</div>
-                                <h4 class="font-bold text-brandText text-xl mb-1">Anand Agrwal</h4>
+                                    R</div>
+                                <h4 class="font-bold text-brandText text-xl mb-1">Rishi Pal</h4>
                                 <div class="text-brandGold text-xs mb-4 flex items-center gap-1">
                                     <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i> <i class="fas fa-star-half-alt text-brandGold/80"></i>
@@ -723,7 +723,7 @@
                         </div>
         </section>
         <section id="tour-gallery"
-            class="pt-16 pb-32 md:pt-24 md:pb-40 px-6 md:px-16 bg-white relative overflow-hidden border-t border-brandText/5">
+            class="pt-16 pb-16 md:pt-24 md:pb-24 px-6 md:px-16 bg-white relative overflow-hidden border-t border-brandText/5">
             <div class="max-w-[1500px] mx-auto relative z-10">
                 <div class="text-center mb-16 reveal-up">
                     <h4 class="text-brandAccent font-bold uppercase tracking-[0.2em] opacity-80 text-xs mb-4">Memories
@@ -823,7 +823,7 @@
         </section>
 
 
-        <section id="about" class="py-32 md:py-40 px-6 md:px-16 max-w-[1400px] mx-auto relative z-10">
+        <section id="about" class="pt-16 pb-16 md:pt-24 md:pb-20 px-6 md:px-16 max-w-[1400px] mx-auto relative z-10">
             <div class="flex flex-col md:flex-row gap-16 items-center relative z-10">
                 <div class="w-full md:w-1/2 reveal-left tilt-card cursor-hover">
                     <div class="relative rounded-[1.5rem] overflow-hidden shadow-2xl border border-brandText/10">
@@ -2780,13 +2780,13 @@
 
         // Lenis Smooth Scrolling
         const lenis = new Lenis({
-            duration: 1.2,
+            duration: 0.8,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             direction: 'vertical',
             gestureDirection: 'vertical',
             smooth: true,
-            mouseMultiplier: 1,
-            smoothTouch: false,
+            mouseMultiplier: 1.2,
+            smoothTouch: true,
             touchMultiplier: 2,
             infinite: false,
         });
