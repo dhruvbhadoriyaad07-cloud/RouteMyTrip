@@ -2537,7 +2537,23 @@
             history.scrollRestoration = 'manual';
         }
 
+        function resetAllSearchFilters() {
+            // Reset search inputs
+            ['search-india', 'search-global'].forEach(id => {
+                let el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+            // Reset package cards visibility
+            ['india-page', 'international-page'].forEach(pageId => {
+                let cards = document.querySelectorAll(`#${pageId} .grid > div`);
+                if (cards) {
+                    cards.forEach(card => card.style.display = "flex");
+                }
+            });
+        }
+
         function navigateForward(targetPageId, hashString) {
+            resetAllSearchFilters();
             const currentScrollY = (typeof lenis !== 'undefined') ? lenis.scroll : window.scrollY;
             history.replaceState({ pageId: activePageId, scrollY: currentScrollY }, '');
 
@@ -2624,6 +2640,7 @@
         }
 
         window.addEventListener('popstate', function (event) {
+            resetAllSearchFilters();
             if (event.state && event.state.pageId) {
                 document.querySelectorAll('.full-page-view, #main-homepage').forEach(p => p.style.display = 'none');
                 document.getElementById(event.state.pageId).style.display = 'block';
@@ -2631,7 +2648,6 @@
 
                 const savedY = event.state.scrollY || 0;
                 if (typeof lenis !== 'undefined') lenis.stop();
-
                 ScrollTrigger.refresh();
                 if (typeof lenis !== 'undefined') lenis.resize();
 
