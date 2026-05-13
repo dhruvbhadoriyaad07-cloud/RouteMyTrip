@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -161,6 +161,7 @@
         .line-clamp-3 {
             display: -webkit-box;
             -webkit-line-clamp: 3;
+            line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -385,7 +386,7 @@
                         class="flex md:grid overflow-x-auto md:overflow-visible snap-x snap-mandatory hide-scrollbar gap-8 pb-6 md:pb-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 scroll-smooth w-full">
 
                         <div
-                            class="min-w-[85vw] sm:min-w-[350px] md:min-w-0 snap-center bg-brandCard rounded-[2rem] overflow-hidden shadow-lg tilt-card cursor-hover reveal-up border border-brandText/5 relative group flex flex-col h-full">
+                            class="min-w-[85vw] sm:min-w-[350px] md:min-w-0 snap-center bg-brandCard rounded-[2rem] overflow-hidden shadow-lg cursor-hover transition-transform duration-300 hover:-translate-y-2 border border-brandText/5 relative group flex flex-col h-full">
                             <div class="relative h-[250px] overflow-hidden m-2 rounded-t-[1.5rem]">
                                 <img src="IMAGE/SP manali.avif"
                                     class="w-full h-full object-cover parallax-img group-hover:scale-110 transition-transform duration-700">
@@ -411,7 +412,7 @@
                         </div>
 
                         <div
-                            class="min-w-[85vw] sm:min-w-[350px] md:min-w-0 snap-center bg-brandCard rounded-[2rem] overflow-hidden shadow-lg tilt-card cursor-hover reveal-up delay-1 border border-brandText/5 relative group flex flex-col h-full">
+                            class="min-w-[85vw] sm:min-w-[350px] md:min-w-0 snap-center bg-brandCard rounded-[2rem] overflow-hidden shadow-lg cursor-hover transition-transform duration-300 hover:-translate-y-2 border border-brandText/5 relative group flex flex-col h-full">
                             <div class="relative h-[250px] overflow-hidden m-2 rounded-t-[1.5rem]">
                                 <img src="IMAGE/pexels-urtimud-89-76108288-32262471.jpg"
                                     class="w-full h-full object-cover parallax-img group-hover:scale-110 transition-transform duration-700">
@@ -434,7 +435,7 @@
                         </div>
 
                         <div
-                            class="min-w-[85vw] sm:min-w-[350px] md:min-w-0 snap-center bg-brandCard rounded-[2rem] overflow-hidden shadow-lg tilt-card cursor-hover reveal-up delay-2 border border-brandText/5 relative group flex flex-col h-full">
+                            class="min-w-[85vw] sm:min-w-[350px] md:min-w-0 snap-center bg-brandCard rounded-[2rem] overflow-hidden shadow-lg cursor-hover transition-transform duration-300 hover:-translate-y-2 border border-brandText/5 relative group flex flex-col h-full">
                             <div class="relative h-[250px] overflow-hidden m-2 rounded-t-[1.5rem]">
                                 <img src="IMAGE/pexels-kamran-elyas-53440853-26125620.jpg"
                                     class="w-full h-full object-cover parallax-img group-hover:scale-110 transition-transform duration-700">
@@ -457,7 +458,7 @@
                         </div>
 
                         <div
-                            class="min-w-[85vw] sm:min-w-[350px] md:min-w-0 snap-center bg-brandCard rounded-[2rem] overflow-hidden shadow-lg tilt-card cursor-hover reveal-up delay-3 border border-brandText/5 relative group flex flex-col h-full">
+                            class="min-w-[85vw] sm:min-w-[350px] md:min-w-0 snap-center bg-brandCard rounded-[2rem] overflow-hidden shadow-lg cursor-hover transition-transform duration-300 hover:-translate-y-2 border border-brandText/5 relative group flex flex-col h-full">
                             <div class="relative h-[250px] overflow-hidden m-2 rounded-t-[1.5rem]">
                                 <img src="IMAGE/pexels-shivanshu-sharma-1351241-15084419.jpg"
                                     class="w-full h-full object-cover parallax-img group-hover:scale-110 transition-transform duration-700">
@@ -657,7 +658,7 @@
                             <div class="p-6 relative pt-10">
                                 <div
                                     class="absolute -top-8 left-6 w-16 h-16 rounded-full bg-[#93c5fd] text-white flex items-center justify-center font-bold text-2xl border-4 border-white shadow-sm">
-                                    S</div>
+                                    G</div>
                                 <h4 class="font-bold text-brandText text-xl mb-1">Gyanesh Kumar Jain</h4>
                                 <div class="text-brandGold text-xs mb-4 flex items-center gap-1"><i
                                         class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
@@ -680,7 +681,7 @@
                             <div class="p-6 relative pt-10">
                                 <div
                                     class="absolute -top-8 left-6 w-16 h-16 rounded-full bg-[#93c5fd] text-white flex items-center justify-center font-bold text-2xl border-4 border-white shadow-sm">
-                                    S</div>
+                                    A</div>
                                 <h4 class="font-bold text-brandText text-xl mb-1">Anand Mani Tripathi</h4>
                                 <div class="text-brandGold text-xs mb-4 flex items-center gap-1"><i
                                         class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
@@ -702,12 +703,13 @@
                             <div class="p-6 relative pt-10">
                                 <div
                                     class="absolute -top-8 left-6 w-16 h-16 rounded-full bg-[#93c5fd] text-white flex items-center justify-center font-bold text-2xl border-4 border-white shadow-sm">
-                                    S</div>
+                                    A</div>
                                 <h4 class="font-bold text-brandText text-xl mb-1">Ashish Chavand</h4>
                                 <div class="text-brandGold text-xs mb-4 flex items-center gap-1"><i
-                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i> <span
-                                        class="text-brandText/60 ml-1 font-bold">4.7</span></div>
+                                        class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i> <i class="fas fa-star-half-alt text-brandGold/80"></i>
+                                    <span class="text-brandText/60 ml-1 font-bold">4.5</span>
+                                </div>
                                 <p class="text-brandText/70 font-light text-sm mb-4 line-clamp-3">We booked our
                                     Jaisalmer tour with RouteMyTrip by Yatra India Hamare Sath. We had done a Jagannath
                                     Puri tour with them earlier as well. Their hotel, transport, and food services are
@@ -717,9 +719,33 @@
                                     class="text-brandAccent font-bold text-sm hover:text-brandText transition-colors cursor-hover">Read
                                     More</a>
                             </div>
-
-
                         </div>
+                        <div
+                            class="min-w-[320px] md:min-w-[350px] bg-brandCard rounded-[2rem] border border-gray-100 overflow-visible snap-center flex flex-col mt-6 shadow-xl relative cursor-hover">
+                            <img src="IMAGE/bagaGoa Review.jpg" class="h-48 w-full object-cover rounded-t-[2rem]">
+                            <div class="p-6 relative pt-10">
+                                <div
+                                    class="absolute -top-8 left-6 w-16 h-16 rounded-full bg-[#6ee7b7] text-white flex items-center justify-center font-bold text-2xl border-4 border-white shadow-sm">
+                                    S</div>
+                                <h4 class="font-bold text-brandText text-xl mb-1">Sagar Sharma</h4>
+                                <div class="text-brandGold text-xs mb-4 flex items-center gap-1">
+                                    <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i> <i class="fas fa-star-half-alt text-brandGold/80"></i>
+                                    <span class="text-brandText/60 ml-1 font-bold">4.7</span>
+                                </div>
+                                <p class="text-brandText/70 font-light text-sm mb-4 line-clamp-3">We had an absolutely
+                                    fantastic time in Goa! A huge thank you to the team at RouteMyTrip (formerly Yatra
+                                    India Hamare Sath) for organizing such a seamless and memorable vacation. From the
+                                    hassle-free bookings to ensuring we had plenty of time to relax at beautiful spots
+                                    like Baga Beach, everything was perfectly planned. Highly recommend their travel
+                                    services to anyone looking for a stress-free getaway!</p>
+                                <a href="#.
+                                    class=" text-brandAccent font-bold text-sm hover:text-brandText transition-colors
+                                    cursor-hover">Read
+                                    More</a>
+                            </div>
+                        </div>
+
         </section>
         <section id="tour-gallery"
             class="pt-16 pb-16 md:pt-24 md:pb-24 px-6 md:px-16 bg-white relative overflow-hidden border-t border-brandText/5">
@@ -746,67 +772,72 @@
                     <div id="gallery-slider"
                         class="flex overflow-x-auto gap-4 md:gap-6 hide-scrollbar snap-x snap-mandatory pb-6">
 
-                        <div
+                        <div onclick="openGalleryModal(0)"
                             class="min-w-[85vw] sm:min-w-[300px] lg:min-w-[350px] h-64 md:h-[400px] overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 group cursor-hover snap-center relative">
                             <img src="IMAGE/manaliDogs.jpeg"
-                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 pointer-events-none">
                         </div>
 
-                        <div
+                        <div onclick="openGalleryModal(1)"
                             class="min-w-[85vw] sm:min-w-[300px] lg:min-w-[350px] h-64 md:h-[400px] overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 group cursor-hover snap-center relative bg-black">
                             <video src="./video/Manali.Trip.mp4" autoplay loop muted playsinline
-                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100"></video>
+                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100 pointer-events-none"></video>
                             <div
-                                class="absolute top-4 right-4 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center backdrop-blur-sm">
+                                class="absolute top-4 right-4 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center backdrop-blur-sm pointer-events-none">
                                 <i class="fas fa-play text-xs"></i>
                             </div>
                         </div>
 
-                        <div
+                        <div onclick="openGalleryModal(2)"
                             class="min-w-[85vw] sm:min-w-[300px] lg:min-w-[350px] h-64 md:h-[400px] overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 group cursor-hover snap-center relative">
                             <img src="IMAGE/couple tour gallery.jpeg"
-                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 pointer-events-none">
                         </div>
 
-                        <div
+                        <div onclick="openGalleryModal(3)"
                             class="min-w-[85vw] sm:min-w-[300px] lg:min-w-[350px] h-64 md:h-[400px] overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 group cursor-hover snap-center relative bg-black">
                             <video src="./video/gorella.mp4" autoplay loop muted playsinline
-                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100"></video>
+                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100 pointer-events-none"></video>
                             <div
-                                class="absolute top-4 right-4 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center backdrop-blur-sm">
+                                class="absolute top-4 right-4 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center backdrop-blur-sm pointer-events-none">
                                 <i class="fas fa-play text-xs"></i>
                             </div>
                         </div>
 
-                        <div
+                        <div onclick="openGalleryModal(4)"
                             class="min-w-[85vw] sm:min-w-[300px] lg:min-w-[350px] h-64 md:h-[400px] overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 group cursor-hover snap-center relative">
                             <img src="IMAGE/india gate tour gallery.jpeg"
-                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 pointer-events-none">
                         </div>
 
-                        <div
+                        <div onclick="openGalleryModal(5)"
                             class="min-w-[85vw] sm:min-w-[300px] lg:min-w-[350px] h-64 md:h-[400px] overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 group cursor-hover snap-center relative">
                             <img src="IMAGE/couple 2 night .jpeg"
-                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                class="w-full h-full object-cover object-top transform group-hover:scale-110 transition-transform duration-700 pointer-events-none">
                         </div>
-                        <div
+                        <div onclick="openGalleryModal(6)"
                             class="min-w-[85vw] sm:min-w-[300px] lg:min-w-[350px] h-64 md:h-[400px] overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 group cursor-hover snap-center relative">
                             <img src="IMAGE/couple 3 night 2.jpeg"
-                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                class="w-full h-full object-cover object-top transform group-hover:scale-110 transition-transform duration-700 pointer-events-none">
                         </div>
-                        <div
+                        <div onclick="openGalleryModal(7)"
                             class="min-w-[85vw] sm:min-w-[300px] lg:min-w-[350px] h-64 md:h-[400px] overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 group cursor-hover snap-center relative bg-black">
                             <video src="./video/mahakal2.mp4" autoplay loop muted playsinline
-                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100"></video>
+                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100 pointer-events-none"></video>
                             <div
-                                class="absolute top-4 right-4 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center backdrop-blur-sm">
+                                class="absolute top-4 right-4 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center backdrop-blur-sm pointer-events-none">
                                 <i class="fas fa-play text-xs"></i>
                             </div>
                         </div>
-                        <div
+                        <div onclick="openGalleryModal(8)"
+                            class="min-w-[85vw] sm:min-w-[300px] lg:min-w-[350px] h-64 md:h-[400px] overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 group cursor-hover snap-center relative">
+                            <img src="IMAGE/goa gallery couple.jpg"
+                                class="w-full h-full object-cover object-top transform group-hover:scale-110 transition-transform duration-700 pointer-events-none">
+                        </div>
+                        <div onclick="openGalleryModal(9)"
                             class="min-w-[85vw] sm:min-w-[300px] lg:min-w-[350px] h-64 md:h-[400px] overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 group cursor-hover snap-center relative">
                             <img src="IMAGE/atal nagar .jpeg"
-                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 pointer-events-none">
                         </div>
 
                     </div>
@@ -2052,6 +2083,22 @@
         </div>
     </div>
 
+    <div id="galleryModal" class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4 md:p-10">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closeGalleryModal()"></div>
+        <button onclick="closeGalleryModal()"
+            class="absolute top-6 right-6 text-white hover:text-brandAccent text-4xl transition cursor-hover z-[120]">&times;</button>
+        <button onclick="prevGalleryItem()"
+            class="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl md:text-5xl transition cursor-hover z-[120]"><i
+                class="fas fa-chevron-left"></i></button>
+        <button onclick="nextGalleryItem()"
+            class="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl md:text-5xl transition cursor-hover z-[120]"><i
+                class="fas fa-chevron-right"></i></button>
+        <div class="relative z-20 w-full max-w-5xl max-h-[90vh] flex items-center justify-center"
+            id="galleryModalContent">
+            <!-- Dynamic Content -->
+        </div>
+    </div>
+
     <div id="leadModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center px-4">
         <div class="absolute inset-0 bg-brandText/80 backdrop-blur-md" onclick="closeModal()"></div>
         <div class="bg-brandCard border border-brandText/10 rounded-[2rem] w-full max-w-md p-10 relative z-20 shadow-2xl transform scale-95 opacity-0 transition-all duration-300"
@@ -2755,6 +2802,51 @@
             setTimeout(() => m.classList.add('hidden'), 300);
         }
 
+        const galleryItems = [
+            { src: 'IMAGE/manaliDogs.jpeg', isVideo: false },
+            { src: './video/Manali.Trip.mp4', isVideo: true },
+            { src: 'IMAGE/couple tour gallery.jpeg', isVideo: false },
+            { src: './video/gorella.mp4', isVideo: true },
+            { src: 'IMAGE/india gate tour gallery.jpeg', isVideo: false },
+            { src: 'IMAGE/couple 2 night .jpeg', isVideo: false },
+            { src: 'IMAGE/couple 3 night 2.jpeg', isVideo: false },
+            { src: './video/mahakal2.mp4', isVideo: true },
+            { src: 'IMAGE/goa gallery couple.jpg', isVideo: false },
+            { src: 'IMAGE/atal nagar .jpeg', isVideo: false }
+        ];
+        let currentGalleryIndex = 0;
+
+        function openGalleryModal(index) {
+            currentGalleryIndex = index;
+            const modal = document.getElementById('galleryModal');
+            const content = document.getElementById('galleryModalContent');
+            const item = galleryItems[index];
+
+            if (item.isVideo) {
+                content.innerHTML = `<video src="${item.src}" controls autoplay class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl outline-none"></video>`;
+            } else {
+                content.innerHTML = `<img src="${item.src}" class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl">`;
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closeGalleryModal() {
+            const modal = document.getElementById('galleryModal');
+            const content = document.getElementById('galleryModalContent');
+            modal.classList.add('hidden');
+            setTimeout(() => content.innerHTML = '', 300); // Clear content to stop video
+        }
+
+        function prevGalleryItem() {
+            currentGalleryIndex = (currentGalleryIndex - 1 + galleryItems.length) % galleryItems.length;
+            openGalleryModal(currentGalleryIndex);
+        }
+
+        function nextGalleryItem() {
+            currentGalleryIndex = (currentGalleryIndex + 1) % galleryItems.length;
+            openGalleryModal(currentGalleryIndex);
+        }
+
         document.getElementById('leadForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const name = document.getElementById('userName').value;
@@ -2800,7 +2892,7 @@
             gestureDirection: 'vertical',
             smooth: true,
             mouseMultiplier: 1.2,
-            smoothTouch: true,
+            smoothTouch: false, // Disabled to prevent sticky/laggy scrolling on mobile
             touchMultiplier: 2,
             infinite: false,
         });
@@ -2842,6 +2934,8 @@
         gsap.utils.toArray('.reveal-up').forEach(el => { gsap.fromTo(el, { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 1.0, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } }); });
         gsap.utils.toArray('.reveal-left').forEach(el => { gsap.fromTo(el, { autoAlpha: 0, x: -50 }, { autoAlpha: 1, x: 0, duration: 1.0, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } }); });
         gsap.utils.toArray('.reveal-right').forEach(el => { gsap.fromTo(el, { autoAlpha: 0, x: 50 }, { autoAlpha: 1, x: 0, duration: 1.0, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } }); });
+
+
 
         const seasonalData = {
             winter: {
